@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="signup_activity_horizontal_margin">50dp</dimen>
+    <dimen name="signup_activity_vertical_margin">16dp</dimen>
+    <dimen name="mainscreen_activity_layout_vertical_margin">70dp</dimen>
+</resources>
