@@ -9,7 +9,7 @@ interface MainScreenContract {
     }
 
     interface Model {
-        fun getUserData(): User
+        fun getUserData(): User?
         fun logOut()
     }
 

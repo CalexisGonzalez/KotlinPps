@@ -18,37 +18,43 @@ class MainActivityView(activity: Activity) : MainActivityContract.View {
     private val activity: WeakReference<Activity> = WeakReference(activity)
 
     override fun onGoogleButtonPressed(googleSignInOptions: GoogleSignInOptions) {
-        val signInIntent = GoogleSignIn.getClient(activity.get()!!, googleSignInOptions).signInIntent
-        activity.get()!!.startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
+        activity.get()?.let {
+            val signInIntent = GoogleSignIn.getClient(it, googleSignInOptions).signInIntent
+            it.startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
+        }
     }
 
     override fun onExternalFailure() {
-        Toast.makeText(activity.get(), R.string.external_log_in_error, Toast.LENGTH_SHORT).show()
+        showToast(R.string.external_log_in_error)
     }
 
     override fun onLocalEmailFailure() {
-        Toast.makeText(activity.get(), R.string.local_email_error, Toast.LENGTH_SHORT).show()
+        showToast(R.string.local_email_error)
     }
 
     override fun onLocalPasswordFailure() {
-        Toast.makeText(activity.get(), R.string.local_log_in_error, Toast.LENGTH_SHORT).show()
+        showToast(R.string.local_log_in_error)
     }
 
     override fun onLogInSuccess(gso: GoogleSignInOptions) {
         val intent = Intent(activity.get(), MainScreenActivity::class.java)
             .putExtra(GOOGLE_OPTIONS, gso)
-        activity.get()!!.startActivity(intent)
+        activity.get()?.startActivity(intent)
     }
 
     override fun getEmail(): String {
-        return activity.get()!!.main_activity_mail.text.toString()
+        return activity.get()?.main_activity_mail?.text.toString()
     }
 
     override fun getPassword(): String {
-        return activity.get()!!.main_activity_password.text.toString()
+        return activity.get()?.main_activity_password?.text.toString()
     }
 
     override fun onSignInPressed() {
-        activity.get()!!.startActivity(Intent(activity.get(), SignInActivity::class.java))
+        activity.get()?.startActivity(Intent(activity.get(), SignInActivity::class.java))
+    }
+
+    private fun showToast(message: Int) {
+        Toast.makeText(activity.get(), message, Toast.LENGTH_SHORT).show()
     }
 }

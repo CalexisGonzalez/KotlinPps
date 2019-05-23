@@ -10,7 +10,6 @@ import com.example.kotlinpps.database.DbQuery.DbQueryUserExist
 import com.example.kotlinpps.database.User
 import com.example.kotlinpps.database.UserRoomDatabase
 import com.example.kotlinpps.mvp.contract.MainActivityContract
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class MainActivityModel(private val preferences: SharedPreferences, private val db: UserRoomDatabase) :
@@ -18,7 +17,6 @@ class MainActivityModel(private val preferences: SharedPreferences, private val 
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .build()
-    private var googleAccount: GoogleSignInAccount? = null
 
     override fun getGoogleSignInOptions(): GoogleSignInOptions {
         return gso
@@ -39,11 +37,11 @@ class MainActivityModel(private val preferences: SharedPreferences, private val 
     }
 
     override fun userLogInValid(user: User): Boolean {
-        return DbQueryLocalUserValid(db.userDao()).executeQuery(user)!!
+        return DbQueryLocalUserValid(db.userDao()).executeQuery(user)
     }
 
     override fun getUserId(user: User): Int {
-        return DbFetchUserId(db.userDao()).executeQuery(user)!!
+        return DbFetchUserId(db.userDao()).executeQuery(user)
     }
 
     override fun getPreferencesId(): Int {

@@ -8,11 +8,11 @@ import java.util.concurrent.ExecutionException
 
 class DbFetchUserId(private val userDao: UserDao) : AsyncTask<User, Void, Int>(), DbGenericQuery<Int, User> {
 
-    override fun doInBackground(vararg users: User?): Int? {
-        return userDao.fetchUserId(users[ZERO]!!.mail, users[ZERO]!!.socialId)
+    override fun doInBackground(vararg users: User): Int {
+        return userDao.fetchUserId(users[ZERO].mail, users[ZERO].socialId)
     }
 
-    override fun executeQuery(user: User?): Int? {
+    override fun executeQuery(user: User): Int {
         try {
             return this.execute(user).get()
         } catch (e: ExecutionException) {

@@ -5,8 +5,10 @@ import com.example.kotlinpps.mvp.contract.MainScreenContract
 class MainScreenPresenter(val view: MainScreenContract.View, val model: MainScreenContract.Model) :
     MainScreenContract.Presenter {
     init {
-        val user = model.getUserData()
-        view.setData(user.mail, user.name, user.surname, user.password)
+        model.getUserData()?.let {
+            val user = it
+            view.setData(user.mail, user.name, user.surname, user.password)
+        }
     }
 
     override fun onLogOutPressed() {

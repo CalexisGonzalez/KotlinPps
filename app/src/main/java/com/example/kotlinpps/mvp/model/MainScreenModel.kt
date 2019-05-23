@@ -13,8 +13,8 @@ class MainScreenModel(
     private val preferences: SharedPreferences, private val db: UserRoomDatabase,
     private val googleClient: GoogleSignInClient
 ) : MainScreenContract.Model {
-    override fun getUserData(): User {
-        return DbFetchUserData(db.userDao()).executeQuery(preferences.getInt(USER_PREFERENCES_ID, ZERO))!!
+    override fun getUserData(): User? {
+        return DbFetchUserData(db.userDao()).executeQuery(preferences.getInt(USER_PREFERENCES_ID, ZERO))
     }
 
     override fun logOut() {

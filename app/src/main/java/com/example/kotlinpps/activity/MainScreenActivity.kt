@@ -14,7 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import kotlinx.android.synthetic.main.activity_main_screen.*
 
 class MainScreenActivity : AppCompatActivity() {
-    private var presenter: MainScreenContract.Presenter? = null
+    lateinit private var presenter: MainScreenContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +23,10 @@ class MainScreenActivity : AppCompatActivity() {
             MainScreenView(this),
             MainScreenModel(
                 getSharedPreferences(SHARED_PREFERENCE, Context.MODE_PRIVATE),
-                UserRoomDatabase.getDatabase(this)!!,
+                UserRoomDatabase.getDatabase(this),
                 GoogleSignIn.getClient(this, intent.getParcelableExtra(GOOGLE_OPTIONS))
             )
         )
-        mainscreen_btn_logout.setOnClickListener { presenter!!.onLogOutPressed() }
+        mainscreen_btn_logout.setOnClickListener { presenter.onLogOutPressed() }
     }
 }

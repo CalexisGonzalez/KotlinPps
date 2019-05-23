@@ -10,11 +10,11 @@ import java.util.concurrent.ExecutionException
 class DbQueryUserExist(private val userDao: UserDao) : AsyncTask<User, Void, Boolean>(),
     DbGenericQuery<Boolean, User> {
 
-    override fun doInBackground(vararg users: User?): Boolean? {
-        return userDao.fetchUserExist(users[ZERO]!!.mail, users[ZERO]!!.socialId) == ONE
+    override fun doInBackground(vararg users: User): Boolean {
+        return userDao.fetchUserExist(users[ZERO].mail, users[ZERO].socialId) == ONE
     }
 
-    override fun executeQuery(user: User?): Boolean {
+    override fun executeQuery(user: User): Boolean {
         try {
             return this.execute(user).get()
         } catch (e: ExecutionException) {
@@ -22,7 +22,6 @@ class DbQueryUserExist(private val userDao: UserDao) : AsyncTask<User, Void, Boo
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-
         return false
     }
 }

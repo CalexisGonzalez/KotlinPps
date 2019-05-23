@@ -10,7 +10,6 @@ import com.google.android.gms.common.api.ApiException
 
 class MainActivityPresenter(val view: MainActivityContract.View, val model: MainActivityContract.Model) :
     MainActivityContract.Presenter {
-    private var user: User? = null
 
     init {
         if (model.getPreferencesId() != ZERO) {
@@ -24,16 +23,20 @@ class MainActivityPresenter(val view: MainActivityContract.View, val model: Main
 
     override fun onGoogleCallback(data: Intent) {
         try {
-            val account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)!!
-            user = User(
-                account.email!!, ZERO.toString(), account.displayName!!,
-                account.familyName, null, account.id!!.toDouble()
-            )
-            if (!model.userExist(user!!)) {
-                model.signInUser(user!!)
+            GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)?.let {
+                it.email?.let { it1 ->
+                    val user = User(
+                        it1, ZERO.toString(), it.displayName,
+                        it.familyName, null, it.id?.toDouble() ?: ZERO.toDouble()
+                    )
+                    if (!model.userExist(user)) {
+                        model.signInUser(user)
+                    }
+                    model.logInUser(user)
+                    view.onLogInSuccess(model.getGoogleSignInOptions())
+                }
             }
-            model.logInUser(user!!)
-            view.onLogInSuccess(model.getGoogleSignInOptions())
+
         } catch (e: ApiException) {
             view.onExternalFailure()
         }

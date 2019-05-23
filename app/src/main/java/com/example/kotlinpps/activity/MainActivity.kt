@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    private var presenter: MainActivityContract.Presenter? = null
+    private lateinit var presenter: MainActivityContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,18 +27,18 @@ class MainActivity : AppCompatActivity() {
                 MainActivityView(this),
                 MainActivityModel(
                     getSharedPreferences(SHARED_PREFERENCE, Context.MODE_PRIVATE),
-                    UserRoomDatabase.getDatabase(this)!!
+                    UserRoomDatabase.getDatabase(this)
                 )
             )
-        main_activity_google_login.setOnClickListener { presenter!!.onGoogleButtonPressed() }
-        main_activity_btn_log_in.setOnClickListener { presenter!!.onLogInPressed() }
-        main_activity_btn_sign_up.setOnClickListener { presenter!!.onSignInPressed() }
+        main_activity_google_login.setOnClickListener { presenter.onGoogleButtonPressed() }
+        main_activity_btn_log_in.setOnClickListener { presenter.onLogInPressed() }
+        main_activity_btn_sign_up.setOnClickListener { presenter.onSignInPressed() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_SIGN_IN) {
-            data?.let { presenter!!.onGoogleCallback(it) }
+            data?.let { presenter.onGoogleCallback(it) }
         }
     }
 }

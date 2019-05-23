@@ -10,14 +10,14 @@ import java.util.concurrent.ExecutionException
 class DbQueryLocalUserValid(private val userDao: UserDao) : AsyncTask<User, Void, Boolean>(),
     DbGenericQuery<Boolean, User> {
 
-    override fun doInBackground(vararg users: User): Boolean? {
+    override fun doInBackground(vararg users: User): Boolean {
         return userDao.fetchUserLocalLogInValid(
             users[ZERO].mail,
             users[ZERO].password
         ) == ONE
     }
 
-    override fun executeQuery(user: User?): Boolean? {
+    override fun executeQuery(user: User): Boolean {
         try {
             return this.execute(user).get()
         } catch (e: ExecutionException) {

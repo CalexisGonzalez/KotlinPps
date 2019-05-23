@@ -9,7 +9,7 @@ import com.example.kotlinpps.ZERO
 @Entity(tableName = USER_TABLE)
 data class User(
     @PrimaryKey(autoGenerate = true)
-    var id: Int?,
+    var id: Int,
     var mail: String,
     var password: String,
     var name: String?,
@@ -18,8 +18,8 @@ data class User(
     var socialId: Double
 ) {
 
-    constructor(mail: String, password: String, name: String, surname: String?, imageUrl: String?, socialId: Double)
-            : this(null, mail, password, name, surname, imageUrl, socialId) {
+    constructor(mail: String, password: String, name: String?, surname: String?, imageUrl: String?, socialId: Double)
+            : this(ZERO, mail, password, name, surname, imageUrl, socialId) {
         this.mail = mail
         this.password = password
         this.name = name
@@ -30,14 +30,14 @@ data class User(
 
     @Ignore
     constructor(mail: String, password: String) :
-            this(null, mail, password, null, null, null, ZERO.toDouble()) {
+            this(ZERO, mail, password, null, null, null, ZERO.toDouble()) {
         this.mail = mail
         this.password = password
     }
 
     @Ignore
     constructor(mail: String, socialId: Double) :
-            this(null, mail, ZERO.toString(), null, null, null, socialId) {
+            this(ZERO, mail, ZERO.toString(), null, null, null, socialId) {
         this.mail = mail
         this.socialId = socialId
     }

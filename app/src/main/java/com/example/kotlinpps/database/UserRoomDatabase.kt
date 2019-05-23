@@ -15,19 +15,20 @@ abstract class UserRoomDatabase : RoomDatabase() {
     companion object {
         private var INSTANCE: UserRoomDatabase? = null
 
-        fun getDatabase(context: Context): UserRoomDatabase? {
-            if (INSTANCE == null) {
-                synchronized(UserRoomDatabase::class) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(
-                            context.applicationContext,
-                            UserRoomDatabase::class.java,
-                            USER_TABLE
-                        ).fallbackToDestructiveMigration().build()
-                    }
-                }
+        fun getDatabase(context: Context): UserRoomDatabase {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
             }
-            return INSTANCE
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    UserRoomDatabase::class.java,
+                    USER_TABLE
+                ).fallbackToDestructiveMigration().build()
+                INSTANCE = instance
+                return instance
+            }
         }
     }
 }

@@ -10,13 +10,13 @@ import com.example.kotlinpps.mvp.view.SignInView
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
-    private var presenter: SignInContract.Presenter? = null
+    private lateinit var presenter: SignInContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.kotlinpps.R.layout.activity_sign_in)
-        presenter = SignInPresenter(SignInView(this), SignInModel(UserRoomDatabase.getDatabase(this)!!))
-        signup_activity_button_cancel.setOnClickListener { presenter!!.onCancelPressed() }
-        signup_activity_button_signup.setOnClickListener { presenter!!.onSignUpPressed() }
+        presenter = SignInPresenter(SignInView(this), SignInModel(UserRoomDatabase.getDatabase(this)))
+        signup_activity_button_cancel.setOnClickListener { presenter.onCancelPressed() }
+        signup_activity_button_signup.setOnClickListener { presenter.onSignUpPressed() }
     }
 }
