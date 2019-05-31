@@ -10,6 +10,7 @@ import com.example.kotlinpps.database.DbQuery.DbQueryUserExist
 import com.example.kotlinpps.database.User
 import com.example.kotlinpps.database.UserRoomDatabase
 import com.example.kotlinpps.mvp.contract.MainActivityContract
+import com.facebook.CallbackManager
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class MainActivityModel(private val preferences: SharedPreferences, private val db: UserRoomDatabase) :
@@ -17,6 +18,7 @@ class MainActivityModel(private val preferences: SharedPreferences, private val 
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .build()
+    private lateinit var  callbackManager: CallbackManager
 
     override fun getGoogleSignInOptions(): GoogleSignInOptions {
         return gso
@@ -46,5 +48,10 @@ class MainActivityModel(private val preferences: SharedPreferences, private val 
 
     override fun getPreferencesId(): Int {
         return preferences.getInt(USER_PREFERENCES_ID, ZERO)
+    }
+
+    override fun getFBCallbackManager(): CallbackManager {
+        callbackManager = CallbackManager.Factory.create()
+        return callbackManager
     }
 }

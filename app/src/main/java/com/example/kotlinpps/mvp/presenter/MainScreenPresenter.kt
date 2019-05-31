@@ -6,8 +6,7 @@ class MainScreenPresenter(val view: MainScreenContract.View, val model: MainScre
     MainScreenContract.Presenter {
     init {
         model.getUserData()?.let {
-            val user = it
-            view.setData(user.mail, user.name, user.surname, user.password)
+            view.setData(it.mail, it.name, it.surname, it.password)
         }
     }
 

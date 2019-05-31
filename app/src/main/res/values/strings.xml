@@ -21,4 +21,7 @@
     <string name="error_signup_missing_field">All fields must be filled</string>
     <string name="msg_on_valid_signup">Succesful user registration</string>
     <string name="btn_log_out">Log Out</string>
+    <string name="facebook_app_id">396924180910511</string>
+    <string name="fb_login_protocol_scheme">fb396924180910511</string>
+
 </resources>
